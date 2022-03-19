@@ -1,3 +1,127 @@
+<h1>Formulario</h1>
+<form (ngSubmit)="onRegister()" #myForm="ngForm">
+  <div class="input-group">
+    <label for="name">Nombre</label>
+    <input type="text" name="name" required id="name" [(ngModel)]="register.name" />
+    <p>Mensajes de error</p>
+  </div>
+  <div class="input-group">
+    <label for="email">Email</label>
+    <input type="email" name="email" required id="email" [(ngModel)]="register.email" />
+    <p>Mensajes de error</p>
+  </div>
+  <div class="input-group">
+    <label for="password">Password</label>
+    <input type="password" name="password" required id="password" [(ngModel)]="register.password" />
+    <p>Mensajes de error</p>
+  </div>
+  <button [disabled]="myForm.invalid" type="submit">Registrar</button>
+  <button type="button">Accion</button>
+</form>
+
+<hr />
+
+<h1>NgClass & NgStyle</h1>
+<input type="text" required #nameInput4="ngModel" [(ngModel)]="person.name" />
+<hr class="line-error"
+  [ngClass]="{
+    'valid': nameInput4.valid,
+    'invalid':  nameInput4.invalid
+  }"
+  />
+<p class="message-error" [class.invalid]="nameInput4.invalid">
+  El campo es requerido
+</p>
+<div class="styles">
+  <div>
+    <input type="number" [(ngModel)]="box.width" />
+    <input type="number" [(ngModel)]="box.height" />
+    <input type="color" [(ngModel)]="box.background" />
+  </div>
+  <div>
+    <div [ngStyle]="{
+      'width.px': box.width,
+      'height.px': box.height,
+      'background-color': box.background,
+      'display': 'block'
+    }"></div>
+  </div>
+</div>
+
+<hr>
+
+<h1>Class & Style</h1>
+<input type="text" required #nameInput="ngModel" [(ngModel)]="person.name">
+<p class="message-error" [class.invalid]="nameInput.invalid">
+  El campo es requerido
+</p>
+
+<label>Nombre</label>
+<input type="text" required #nameInput3="ngModel" [(ngModel)]="person.name">
+<p [style.font-style]="nameInput3.invalid ? 'italic' : 'normal'">Texto texto texto</p>
+<div class="styles">
+  <div>
+    <input type="text" [(ngModel)]="widthImg">
+  </div>
+  <div>
+    <img [style.width.px]="widthImg" [src]="person.avatar" alt="">
+    <!-- <img [style.width.%]="widthImg" [src]="person.avatar" alt=""> -->
+  </div>
+</div>
+
+<hr>
+
+<h1>ngSwitch</h1>
+<input type="text" required [(ngModel)]="person.name" />
+<div [ngSwitch]="person.name">
+  <p *ngSwitchCase="'Angel'">
+    La persona es angel
+  </p>
+  <p *ngSwitchCase="'Luis'">
+    La persona es Luis
+  </p>
+  <p *ngSwitchCase="'Evelyn'">
+    La persona es Evelyn
+  </p>
+  <p *ngSwitchDefault>No hace match</p>
+</div>
+
+<hr>
+
+<h1>*nFor - Objs</h1>
+<div class="products--grid">
+  <div *ngFor="let product of products">
+    <img [src]="product.image" alt="Imagen de {{product.name.toLocaleLowerCase()}}">
+    <h2>{{ product.price }}</h2>
+    <p>{{ product.name }}</p>
+  </div>
+</div>
+
+<hr>
+
+<h1>*nFor</h1>
+<input type="text" required [(ngModel)]="newName">
+<button (click)="addName()">Add name</button>
+<ul>
+  <li *ngIf="names.length === 0">No hay nombres</li>
+  <li *ngFor="let name of names; index as i">
+    {{ i + 1 }}. {{ name }}
+    <button (click)="deleteName(i)">Delete</button>
+  </li>
+</ul>
+
+<hr>
+
+<h1>*ngIf - Directivas</h1>
+<input type="text" required [(ngModel)]="person.name">
+<p *ngIf="person.name === 'Luis'">Soy Luisito</p>
+<p *ngIf="person.name === 'Angel' && person.age == 18; else elseBlock">Soy Angel</p>
+<ng-template #elseBlock>
+  <p>Bloque de else</p>
+</ng-template>
+
+<hr>
+
 <h1>NgModel</h1>
 <p>Nombre {{ person.name }}</p>
 
@@ -6,7 +130,6 @@
 
 <input type="number" max="18" min="10" required #ageInput="ngModel" [(ngModel)]="person.age">
 <p>Age: {{ ageInput.valid }}</p>
-
 
 <hr>
 
@@ -39,6 +162,6 @@
 <h2>{{ 'Hola Mundo '.repeat(5) }}</h2>
 <p>6 + 3 = {{ 6 + 3 }}</p>
 <h3>Hola, soy {{ name }} y tengo {{ age }}</h3>
-<img src="{{ image }}" alt="Image random" width="500">
+<img src="{{ image }}" alt="Image random" width="100">
 
 <h4>{{ 'Esto son string interpolation, variables tiene que ser publicas' }}</h4>
